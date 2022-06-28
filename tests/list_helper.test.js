@@ -1,53 +1,75 @@
 const listHelper = require('../utils/list_helper')
 
-const blog1 = {
-  _id: '5a422aa71b54a676234d17f8',
-  title: 'Go To Statement Considered Harmful',
-  author: 'Edsger W. Dijkstra',
-  url: 'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
-  likes: 5,
-  __v: 0,
-}
-
-const blog2 = {
-  _id: '5a422aa71b54a676234d1aaa',
-  title: 'Second Cool Blog',
-  author: 'Person McHuman',
-  url: 'https://hs.fi',
-  likes: 100,
-  __v: 0,
-}
-
-const blog3 = {
-  _id: '5aaa2aa71b54a676234d1aaa',
-  title: 'Third Blog Problems',
-  author: 'Tri Harder',
-  url: 'https://google.com',
-  likes: 2001,
-  __v: 0,
-}
-
-const blog_arr = [blog1, blog2, blog3]
-
-test('dummy returns one', () => {
-  const blogs = []
-
-  const result = listHelper.dummy(blogs)
-  expect(result).toBe(1)
-})
+const blogs = [
+  {
+    _id: '5a422a851b54a676234d17f7',
+    title: 'React patterns',
+    author: 'Michael Chan',
+    url: 'https://reactpatterns.com/',
+    likes: 7,
+    __v: 0,
+  },
+  {
+    _id: '5a422aa71b54a676234d17f8',
+    title: 'Go To Statement Considered Harmful',
+    author: 'Edsger W. Dijkstra',
+    url: 'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
+    likes: 5,
+    __v: 0,
+  },
+  {
+    _id: '5a422b3a1b54a676234d17f9',
+    title: 'Canonical string reduction',
+    author: 'Edsger W. Dijkstra',
+    url: 'http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html',
+    likes: 12,
+    __v: 0,
+  },
+  {
+    _id: '5a422b891b54a676234d17fa',
+    title: 'First class tests',
+    author: 'Robert C. Martin',
+    url: 'http://blog.cleancoder.com/uncle-bob/2017/05/05/TestDefinitions.htmll',
+    likes: 10,
+    __v: 0,
+  },
+  {
+    _id: '5a422ba71b54a676234d17fb',
+    title: 'TDD harms architecture',
+    author: 'Robert C. Martin',
+    url: 'http://blog.cleancoder.com/uncle-bob/2017/03/03/TDD-Harms-Architecture.html',
+    likes: 0,
+    __v: 0,
+  },
+  {
+    _id: '5a422bc61b54a676234d17fc',
+    title: 'Type wars',
+    author: 'Robert C. Martin',
+    url: 'http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html',
+    likes: 2,
+    __v: 0,
+  },
+]
 
 test('when array contains one blog, returns the likes of that blog', () => {
-  expect(listHelper.totalLikes([blog1])).toBe(5)
+  expect(listHelper.totalLikes([blogs[0]])).toBe(7)
 })
 
 test('can count total likes of several blogs', () => {
-  expect(listHelper.totalLikes(blog_arr)).toBe(2106)
+  expect(listHelper.totalLikes(blogs)).toBe(36)
 })
 
 test('returns object with most likes from array of one', () => {
-  expect(listHelper.favoriteBlog([blog1])).toEqual(blog1)
+  expect(listHelper.favoriteBlog([blogs[0]])).toEqual(blogs[0])
 })
 
 test('returns object with most likes from array of objects', () => {
-  expect(listHelper.favoriteBlog(blog_arr)).toEqual(blog3)
+  expect(listHelper.favoriteBlog(blogs)).toEqual(blogs[2])
+})
+
+test('returns author and blog count of most featured author', () => {
+  expect(listHelper.mostBlogs(blogs)).toEqual({
+    author: 'Robert C. Martin',
+    blogs: 3,
+  })
 })

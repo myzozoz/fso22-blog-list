@@ -1,8 +1,3 @@
-//eslint-disable-next-line
-const dummy = (blogs) => {
-  return 1
-}
-
 const totalLikes = (blogs) => {
   return blogs.reduce((p, c) => p + c.likes, 0)
 }
@@ -16,8 +11,27 @@ const favoriteBlog = (blogs) => {
   return blogs[max_index]
 }
 
+const mostBlogs = (blogs) => {
+  const blogsByAuthor = blogs.reduce((p, c) => {
+    const a_i = p.findIndex((x) => x.author === c.author)
+    if (a_i < 0) {
+      return [...p, { author: c.author, blogs: 1 }]
+    } else {
+      const bs = [...p]
+      bs[a_i].blogs++
+      return bs
+    }
+  }, [])
+
+  const max_index = blogsByAuthor
+    .map((a) => a.blogs)
+    .reduce((p, c, i) => (blogsByAuthor[p].blogs < c ? i : p), 0)
+
+  return blogsByAuthor[max_index]
+}
+
 module.exports = {
   totalLikes,
-  dummy,
   favoriteBlog,
+  mostBlogs,
 }
