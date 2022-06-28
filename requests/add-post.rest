@@ -2,8 +2,8 @@ POST http://localhost:3003/api/blogs
 Content-Type: application/json
 
 {
-  "title": "Yes here we go",
-  "author": "make",
-  "url": "https://super-ebin.com",
-  "likes": 100
+  "title": "Here I Go Again",
+  "author": "Makesnake",
+  "url": "https://beyond-super.com",
+  "likes": 10000
 }
