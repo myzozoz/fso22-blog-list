@@ -1,0 +1,31 @@
+{
+  "name": "fso22-blog-list",
+  "version": "1.0.0",
+  "description": "Part 4 of fso",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/myzozoz/fso22-blog-list.git"
+  },
+  "author": "make",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/myzozoz/fso22-blog-list/issues"
+  },
+  "homepage": "https://github.com/myzozoz/fso22-blog-list#readme",
+  "devDependencies": {
+    "dotenv": "^16.0.1",
+    "eslint": "^8.18.0",
+    "nodemon": "^2.0.18"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "mongoose": "^6.4.1"
+  }
+}
