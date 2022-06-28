@@ -30,8 +30,28 @@ const mostBlogs = (blogs) => {
   return blogsByAuthor[max_index]
 }
 
+const mostLikes = (blogs) => {
+  const likesByAuthor = blogs.reduce((p, c) => {
+    const a_i = p.findIndex((x) => x.author === c.author)
+    if (a_i < 0) {
+      return [...p, { author: c.author, likes: c.likes }]
+    } else {
+      const ls = [...p]
+      ls[a_i].likes += c.likes
+      return ls
+    }
+  }, [])
+
+  const max_index = likesByAuthor
+    .map((a) => a.likes)
+    .reduce((p, c, i) => (likesByAuthor[p].likes < c ? i : p), 0)
+
+  return likesByAuthor[max_index]
+}
+
 module.exports = {
   totalLikes,
   favoriteBlog,
   mostBlogs,
+  mostLikes,
 }

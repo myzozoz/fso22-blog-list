@@ -73,3 +73,10 @@ test('returns author and blog count of most featured author', () => {
     blogs: 3,
   })
 })
+
+test('returns author and blog count of most featured author', () => {
+  expect(listHelper.mostLikes(blogs)).toEqual({
+    author: 'Edsger W. Dijkstra',
+    likes: 17,
+  })
+})
