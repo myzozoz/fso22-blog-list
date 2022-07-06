@@ -67,6 +67,26 @@ test('blog with no likes gets 0 likes as default', async () => {
   )
 })
 
+test('blog with no title is not added', async () => {
+  const testBlog = {
+    author: 'Carlos McMuffin',
+    url: 'http://blog.cleaasdfasefasdf.com',
+    likes: 2,
+  }
+
+  await api.post('/api/blogs').send(testBlog).expect(400)
+})
+
+test('blog with no url is not added', async () => {
+  const testBlog = {
+    title: 'Testing and Related Tropical Diseases',
+    author: 'Carlos McMuffin',
+    likes: 2,
+  }
+
+  await api.post('/api/blogs').send(testBlog).expect(400)
+})
+
 afterAll(() => {
   mongoose.connection.close()
 })

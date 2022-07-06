@@ -1,11 +1,12 @@
 const express = require('express')
+require('express-async-errors')
 const app = express()
 const cors = require('cors')
 const mongoose = require('mongoose')
 const blogRouter = require('./controllers/blogs')
 const { MONGODB_URI } = require('./utils/config')
 const { info, error } = require('./utils/logger')
-const { requestLogger } = require('./utils/middleware')
+const { requestLogger, errorHandler } = require('./utils/middleware')
 
 mongoose
   .connect(MONGODB_URI)
@@ -25,5 +26,7 @@ app.get('/hello', (req, res) => {
   info('hello?', req, res)
   res.send('hello')
 })
+
+app.use(errorHandler)
 
 module.exports = app
