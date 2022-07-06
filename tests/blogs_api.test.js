@@ -87,6 +87,22 @@ test('blog with no url is not added', async () => {
   await api.post('/api/blogs').send(testBlog).expect(400)
 })
 
+test('can delete post by id', async () => {
+  await api.delete(`/api/blogs/${helper.initialBlogs[0]._id}`).expect(204)
+
+  const blogs = await helper.blogsInDb()
+
+  expect(blogs).toHaveLength(helper.initialBlogs.length - 1)
+
+  expect(blogs).not.toContainEqual(
+    expect.objectContaining({
+      title: helper.initialBlogs[0].title,
+      author: helper.initialBlogs[0].author,
+      url: helper.initialBlogs[0].url,
+    })
+  )
+})
+
 afterAll(() => {
   mongoose.connection.close()
 })
