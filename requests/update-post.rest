@@ -1,0 +1,9 @@
+PUT http://localhost:3003/api/blogs/62c587d5fd6915b998b964a8
+Content-Type: application/json
+
+{
+  "title": "Wish You Weren't Here",
+  "author": "Pink Make",
+  "url": "https://absolute-beaute.com",
+  "likes": 10
+}

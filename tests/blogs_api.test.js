@@ -103,6 +103,22 @@ test('can delete post by id', async () => {
   )
 })
 
+test('can update likes', async () => {
+  const newBlog = {
+    id: helper.initialBlogs[0]._id,
+    title: helper.initialBlogs[0].title,
+    author: helper.initialBlogs[0].author,
+    url: helper.initialBlogs[0].url,
+    likes: helper.initialBlogs[0].likes * 2,
+  }
+  await api.put(`/api/blogs/${newBlog.id}`).send(newBlog).expect(200)
+
+  const blogs = await helper.blogsInDb()
+  expect(blogs).toHaveLength(helper.initialBlogs.length)
+  const blog = await helper.blogById(newBlog.id)
+  expect(blog).toEqual(newBlog)
+})
+
 afterAll(() => {
   mongoose.connection.close()
 })
