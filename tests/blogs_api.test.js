@@ -24,12 +24,12 @@ test('all blogs are returned', async () => {
   expect(response.body).toHaveLength(helper.initialBlogs.length)
 })
 
-/*
 test('blogs have id field', async () => {
   const response = await api.get('/api/blogs')
-  const blog = response.blog[0]
-
-})*/
+  const blog = response.body[0]
+  console.log('blog: ', blog)
+  expect(blog.id).toBeDefined()
+})
 
 afterAll(() => {
   mongoose.connection.close()
