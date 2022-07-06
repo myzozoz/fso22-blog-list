@@ -27,8 +27,25 @@ test('all blogs are returned', async () => {
 test('blogs have id field', async () => {
   const response = await api.get('/api/blogs')
   const blog = response.body[0]
-  console.log('blog: ', blog)
   expect(blog.id).toBeDefined()
+})
+
+test('can add valid blog', async () => {
+  const testBlog = {
+    title: 'Testing and Related Tropical Diseases',
+    author: 'Carlos McMuffin',
+    url: 'http://blog.cleaasdfasefasdf.com',
+    likes: 2,
+  }
+  await api
+    .post('/api/blogs')
+    .send(testBlog)
+    .expect(201)
+    .expect('Content-Type', /application\/json/)
+
+  const blogs = await helper.blogsInDb()
+  expect(blogs).toHaveLength(helper.initialBlogs.length + 1)
+  expect(blogs).toContainEqual(expect.objectContaining(testBlog))
 })
 
 afterAll(() => {

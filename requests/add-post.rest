@@ -2,8 +2,8 @@ POST http://localhost:3003/api/blogs
 Content-Type: application/json
 
 {
-  "title": "Here I Go Again",
-  "author": "Makesnake",
-  "url": "https://beyond-super.com",
-  "likes": 10000
+  "title": "Wish You Weren't Here",
+  "author": "Pink Make",
+  "url": "https://absolute-beaute.com",
+  "likes": 10
 }
