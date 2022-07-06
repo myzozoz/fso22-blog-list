@@ -48,6 +48,25 @@ test('can add valid blog', async () => {
   expect(blogs).toContainEqual(expect.objectContaining(testBlog))
 })
 
+test('blog with no likes gets 0 likes as default', async () => {
+  const testBlog = {
+    title: 'Testing and Related Tropical Diseases',
+    author: 'Carlos McMuffin',
+    url: 'http://blog.cleaasdfasefasdf.com',
+  }
+
+  await api
+    .post('/api/blogs')
+    .send(testBlog)
+    .expect(201)
+    .expect('Content-Type', /application\/json/)
+
+  const blogs = await helper.blogsInDb()
+  expect(blogs).toContainEqual(
+    expect.objectContaining({ ...testBlog, likes: 0 })
+  )
+})
+
 afterAll(() => {
   mongoose.connection.close()
 })
