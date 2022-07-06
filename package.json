@@ -4,9 +4,9 @@
   "description": "Part 4 of fso",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js",
-    "test": "jest --verbose"
+    "start": "NODE_ENV=production node index.js",
+    "dev": "NODE_ENV=development nodemon index.js",
+    "test": "NODE_ENV=test jest --verbose --runInBand --forceExit"
   },
   "repository": {
     "type": "git",
@@ -22,7 +22,8 @@
     "dotenv": "^16.0.1",
     "eslint": "^8.18.0",
     "jest": "^28.1.1",
-    "nodemon": "^2.0.18"
+    "nodemon": "^2.0.18",
+    "supertest": "^6.2.4"
   },
   "dependencies": {
     "cors": "^2.8.5",
