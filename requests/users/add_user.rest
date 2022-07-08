@@ -2,7 +2,7 @@ POST http://localhost:3003/api/users
 Content-Type: application/json
 
 {
-  "username": "makeasdfa",
+  "username": "Marcel",
   "name": "Markus",
   "password": "a"
 }
