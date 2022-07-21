@@ -3,8 +3,8 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik1hcmNlbCIsImlkIjoiNjJkOTNiZTA1MjE3OWQ0MjUzMTE0Yjc2IiwiaWF0IjoxNjU4NDA0MzAzfQ.IYBrZ5_aq3AGSuBA4owaE_dgUR4WNhAniJSoxV0yLYA
 
 {
-  "title": "A Chaotic Evil",
+  "title": "Testblog1",
   "author": "Make The Destroyer",
   "url": "https://absolute-beaute.com",
-  "likes": 112
+  "likes": 1
 }

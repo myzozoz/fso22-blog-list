@@ -8,6 +8,14 @@ const requestLogger = (request, response, next) => {
   next()
 }
 
+const tokenExtractor = (req, res, next) => {
+  const auth = req.get('authorization')
+  if (auth && auth.toLowerCase().startsWith('bearer ')) {
+    req['token'] = auth.substring(7)
+  }
+  next()
+}
+
 const errorHandler = (error, req, res, next) => {
   if (error.name === 'CastError') {
     return res.status(400).send({ error: 'malformatted id' })
@@ -23,5 +31,6 @@ const errorHandler = (error, req, res, next) => {
 
 module.exports = {
   requestLogger,
+  tokenExtractor,
   errorHandler,
 }

@@ -8,7 +8,11 @@ const usersRouter = require('./controllers/users')
 const loginRouter = require('./controllers/login')
 const { MONGODB_URI } = require('./utils/config')
 const { info, error } = require('./utils/logger')
-const { requestLogger, errorHandler } = require('./utils/middleware')
+const {
+  requestLogger,
+  errorHandler,
+  tokenExtractor,
+} = require('./utils/middleware')
 
 mongoose
   .connect(MONGODB_URI)
@@ -22,6 +26,7 @@ mongoose
 app.use(cors())
 app.use(express.json())
 app.use(requestLogger)
+app.use(tokenExtractor)
 app.use('/api/blogs', blogsRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
