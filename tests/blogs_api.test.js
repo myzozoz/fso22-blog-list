@@ -6,12 +6,26 @@ const helper = require('./test_helper')
 const app = require('../app')
 const api = supertest(app)
 const Blog = require('../models/blog')
+const jwt = require('jsonwebtoken')
 
 describe('when blogs already exist', () => {
+  let token
   beforeEach(async () => {
+    await User.deleteMany({})
+    const passwordHash = await bcrypt.hash('sekret', 10)
+    const user = new User({ username: 'root', passwordHash })
+    await user.save()
+
     await Blog.deleteMany({})
 
-    await Blog.insertMany(helper.initialBlogs)
+    const blogs = helper.initialBlogs.map((b) => ({ ...b, user: user._id }))
+    await Blog.insertMany(blogs)
+
+    const userForToken = {
+      username: user.username,
+      id: user._id,
+    }
+    token = jwt.sign(userForToken, process.env.SECRET)
   })
 
   test('blogs are returned as json', async () => {
@@ -42,6 +56,7 @@ describe('when blogs already exist', () => {
     }
     await api
       .post('/api/blogs')
+      .set('Authorization', `Bearer ${token}`)
       .send(testBlog)
       .expect(201)
       .expect('Content-Type', /application\/json/)
@@ -60,6 +75,7 @@ describe('when blogs already exist', () => {
 
     await api
       .post('/api/blogs')
+      .set('Authorization', `Bearer ${token}`)
       .send(testBlog)
       .expect(201)
       .expect('Content-Type', /application\/json/)
@@ -77,7 +93,11 @@ describe('when blogs already exist', () => {
       likes: 2,
     }
 
-    await api.post('/api/blogs').send(testBlog).expect(400)
+    await api
+      .post('/api/blogs')
+      .set('Authorization', `Bearer ${token}`)
+      .send(testBlog)
+      .expect(400)
   })
 
   test('blog with no url is not added', async () => {
@@ -87,11 +107,18 @@ describe('when blogs already exist', () => {
       likes: 2,
     }
 
-    await api.post('/api/blogs').send(testBlog).expect(400)
+    await api
+      .post('/api/blogs')
+      .set('Authorization', `Bearer ${token}`)
+      .send(testBlog)
+      .expect(400)
   })
 
   test('can delete post by id', async () => {
-    await api.delete(`/api/blogs/${helper.initialBlogs[0]._id}`).expect(204)
+    await api
+      .delete(`/api/blogs/${helper.initialBlogs[0]._id}`)
+      .set('Authorization', `Bearer ${token}`)
+      .expect(204)
 
     const blogs = await helper.blogsInDb()
 
@@ -119,11 +146,11 @@ describe('when blogs already exist', () => {
     const blogs = await helper.blogsInDb()
     expect(blogs).toHaveLength(helper.initialBlogs.length)
     const blog = await helper.blogById(newBlog.id)
-    expect(blog).toEqual(newBlog)
+    expect(blog).toEqual(expect.objectContaining(newBlog))
   })
 })
 
-describe('when there is initially one user at db', () => {
+describe('when there is initially one user in db', () => {
   beforeEach(async () => {
     await User.deleteMany({})
 
